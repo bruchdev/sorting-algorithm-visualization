@@ -51,7 +51,7 @@ public abstract class SortingAlgorithm {
         Utils.printInCenter(separator, " ");
     }
 
-    protected void printArray(int currentIndex, int targetIndex) {
+    protected synchronized void printArray(int currentIndex, int targetIndex) {
         StringBuilder output = new StringBuilder();
         int maxHeight = findMax(array);
 
@@ -90,7 +90,7 @@ public abstract class SortingAlgorithm {
     /**
      *
      */
-    public void printArray() {
+    public synchronized void printArray() {
         StringBuilder output = new StringBuilder();
         int maxHeight = findMax(array);
 
