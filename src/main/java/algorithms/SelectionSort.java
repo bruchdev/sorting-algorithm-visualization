@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 public class SelectionSort extends SortingAlgorithm {
 
-    public SelectionSort(ArrayList<Integer> array) {
-        super(array);
+    public SelectionSort(ArrayList<Integer> array, boolean printInConsole) {
+        super(array, printInConsole);
     }
 
     @Override
@@ -18,7 +18,7 @@ public class SelectionSort extends SortingAlgorithm {
 
             for (int j = i + 1; j < n; j++) {
                 // Visualize the comparison
-                printArray(i, j);
+                if (printInConsole) printArray(i, j);
                 comparisonCount++;
 
                 if (array.get(j) < array.get(currentMin)) {
@@ -28,7 +28,7 @@ public class SelectionSort extends SortingAlgorithm {
 
             // Swap and visualize the result of the selection for this iteration
             if (currentMin != i) {
-                swapHighlighted(i, currentMin, SLEEP_DURATION);
+                swapAndPrint(i, currentMin, SLEEP_DURATION);
                 swapCount++;
             }
 
@@ -42,7 +42,7 @@ public class SelectionSort extends SortingAlgorithm {
         }
 
         // Final visualization with all elements highlighted in green
-        printArray(-1, -1);
+        if (printInConsole) printArray(-1, -1);
     }
 }
 

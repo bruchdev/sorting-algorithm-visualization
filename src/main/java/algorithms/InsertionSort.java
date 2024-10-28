@@ -3,30 +3,22 @@ package algorithms;
 import ui.Utils;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Set;
 
 
 public class InsertionSort extends SortingAlgorithm {
 
-    public InsertionSort(ArrayList<Integer> array) {
-        super(array);
-
+    public InsertionSort(ArrayList<Integer> array, boolean printInConsole) {
+        super(array, printInConsole);
     }
 
     @Override
     public void sort() {
-        if (array.isEmpty()) {
-            System.out.println("Array is empty, nothing to sort.");
-            return;
-        }
-
-        Set<Integer> sortedIndices = new HashSet<>();
         int n = array.size();
 
         for (int i = 1; i < n; i++) {
 
-            int sleepDuration = 20 ; // Dynamic delay for shifts and comparisons
+            int sleepDuration = 20; // Dynamic delay for shifts and comparisons
             int highlightSortedElementDelay = 40; // Delay specifically for highlighting sorted elements
 
             int key = array.get(i);
@@ -34,37 +26,41 @@ public class InsertionSort extends SortingAlgorithm {
 
 
             // Highlight the key element: = YELLOW =
-            highlightElement(array, i, "\033[33m", sortedIndices, sleepDuration);
+            if (printInConsole) highlightElement(array, i, "\033[33m", sleepDuration);
 
             // Shift elements in sorted portion to make space for key: = RED =
             while (j >= 0 && array.get(j) > key) {
                 comparisonCount++;
                 array.set(j + 1, array.get(j));
-                highlightElement(array, j + 1, "\033[31m", sortedIndices, sleepDuration);
+                if (printInConsole) highlightElement(array, j + 1, "\033[31m", sleepDuration);
                 j--;
             }
 
             // Show target position in: = BLUE =  before insertion
-            highlightElement(array, j + 1, "\033[34m", sortedIndices, sleepDuration * 2);
+            if (printInConsole) highlightElement(array, j + 1, "\033[34m", sleepDuration * 2);
             array.set(j + 1, key);
             swapCount++;
 
             // Delay and mark as sorted in: = GREEN =
-            try {
-                Thread.sleep(highlightSortedElementDelay);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+            if (printInConsole) {
+                try {
+                    Thread.sleep(highlightSortedElementDelay);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
             }
 
             sortedIndices.add(j + 1);
-            printArray(-1, -1);
+            if (printInConsole) printArray(-1, -1);
         }
 
-        highlightEverything();
-        printArray(-1, -1);
+        if (printInConsole) {
+            highlightEverything();
+            printArray(-1, -1);
+        }
     }
 
-    private void highlightElement(ArrayList<Integer> array, int index, String color, Set<Integer> sortedIndices, int sleepDuration) {
+    private void highlightElement(ArrayList<Integer> array, int index, String color, int sleepDuration) {
         final String SQUARE = "◼";
         StringBuilder output = new StringBuilder();
 
@@ -76,8 +72,7 @@ public class InsertionSort extends SortingAlgorithm {
                 if (element >= row) {
                     if (col == index) {
                         output.append(color).append(Utils.getCurrentSymbol()).append(RESET); // Highlight element in specified color
-                    }
-                    else {
+                    } else {
                         output.append(Utils.getCurrentSymbol());
                     }
                 } else {

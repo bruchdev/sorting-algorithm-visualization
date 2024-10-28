@@ -14,18 +14,20 @@ public abstract class SortingAlgorithm {
     protected int comparisonCount;
     protected int swapCount;
     protected Set<Integer> sortedIndices;
+    protected boolean printInConsole;
 
     protected final String RESET = "\033[0m";
     protected final String RED = "\033[31m"; // comparison element
     protected final String BLUE = "\033[34m"; // target element
     protected final String GREEN = "\033[32m"; // sorted elements
 
-    public SortingAlgorithm(ArrayList<Integer> array) {
+    public SortingAlgorithm(ArrayList<Integer> array, boolean printInConsole) {
         if (array == null) {
             throw new IllegalArgumentException("Array can't be empty.");
         }
         this.array = array;
         this.sortedIndices = new HashSet<>();
+        this.printInConsole = printInConsole;
     }
 
     public abstract void sort();
@@ -106,17 +108,20 @@ public abstract class SortingAlgorithm {
         System.out.print("\033[" + maxHeight + "F"); // Move cursor up to the top
     }
 
-    protected void swapHighlighted(int currentIndex, int targetIndex, int sleepDuration) {
-        printArray(currentIndex, targetIndex);
-        sleepALittle(sleepDuration);
+    protected void swapAndPrint(int currentIndex, int targetIndex, int sleepDuration) {
+        if (printInConsole) {
+            printArray(currentIndex, targetIndex);
+            sleepALittle(sleepDuration);
+        }
 
-        // Perform the swap
         int temp = array.get(currentIndex);
         array.set(currentIndex, array.get(targetIndex));
         array.set(targetIndex, temp);
 
-        printArray(currentIndex, targetIndex); // maybe change ?
-        sleepALittle(sleepDuration);
+        if (printInConsole) {
+            printArray(currentIndex, targetIndex);
+            sleepALittle(sleepDuration);
+        }
     }
 
     protected void highlightEverything() {

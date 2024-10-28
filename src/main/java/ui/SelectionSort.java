@@ -5,7 +5,7 @@ import static ui.UI.array;
 class SelectionSort {
     protected static void start() {
         Utils.prepareForSorting("Selection Sort");
-        algorithms.SelectionSort algo = new algorithms.SelectionSort(array);
+        algorithms.SelectionSort algo = new algorithms.SelectionSort(array, true);
         algo.printArray();
         Utils.sleepALittle(2000);
         algo.sort();

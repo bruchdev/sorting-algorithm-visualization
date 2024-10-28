@@ -1,15 +1,12 @@
 package algorithms;
 
-import ui.Utils;
-
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ServiceLoader;
 
 public class QuickSort extends SortingAlgorithm {
 
-    public QuickSort(ArrayList<Integer> array) {
-        super(array);
+    public QuickSort(ArrayList<Integer> array, boolean printInConsole) {
+        super(array, printInConsole);
     }
 
     @Override
@@ -22,7 +19,7 @@ public class QuickSort extends SortingAlgorithm {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        printArray(-1, -1);
+        if (printInConsole) printArray(-1, -1);
     }
 
     Thread NewQuickSortThread(int start, int end, int sleepDuration) {
@@ -50,9 +47,9 @@ public class QuickSort extends SortingAlgorithm {
         int partitionIndex = start;
 
         for (int i = start; i < end; i++) {
-            printArray(i, end);
+            if(printInConsole) printArray(i, end);
             if (array.get(i) <= pivotValue) {
-                swapHighlighted(partitionIndex, i, sleepDuration);
+                swapAndPrint(partitionIndex, i, sleepDuration);
                 swapCount++;
                 partitionIndex++;
                 if (array.get(i) == pivotValue) sortedIndices.add(i);
@@ -61,7 +58,7 @@ public class QuickSort extends SortingAlgorithm {
             comparisonCount++;
         }
 
-        swapHighlighted( partitionIndex, end, sleepDuration);
+        swapAndPrint(partitionIndex, end, sleepDuration);
         swapCount++;
         sortedIndices.add(partitionIndex);
         if (start == end - 1) {
