@@ -6,7 +6,7 @@ class QuickSortTest extends SortingAlgorithmTest {
     @Override
     @Test
     public void unsorted_nonUnique() {
-        var arr = initializeUnsortedNonUnique();
+        var arr = initializeUnsortedDuplicated();
 
         var algo = new QuickSort(arr, false);
         algo.sort();
@@ -28,7 +28,7 @@ class QuickSortTest extends SortingAlgorithmTest {
     @Override
     @Test
     public void sorted_nonUnique() {
-        var arr = initializeSortedNonUnique();
+        var arr = initializeSortedDuplicated();
 
         var algo = new QuickSort(arr, false);
         algo.sort();

@@ -7,7 +7,7 @@ class SelectionSortTest extends SortingAlgorithmTest {
     @Override
     @Test
     public void unsorted_nonUnique() {
-        var arr = initializeUnsortedNonUnique();
+        var arr = initializeUnsortedDuplicated();
 
         var algo = new SelectionSort(arr, false);
         algo.sort();
@@ -29,7 +29,7 @@ class SelectionSortTest extends SortingAlgorithmTest {
     @Override
     @Test
     public void sorted_nonUnique() {
-        var arr = initializeSortedNonUnique();
+        var arr = initializeSortedDuplicated();
 
         var algo = new SelectionSort(arr, false);
         algo.sort();

@@ -16,8 +16,8 @@ public abstract class SortingAlgorithmTest {
 
     public abstract void sorted_unique();
 
-    protected ArrayList<Integer> initializeUnsortedNonUnique() {
-        var arr = fillNonUniqueElements();
+    protected ArrayList<Integer> initializeUnsortedDuplicated() {
+        var arr = fillDuplicatedElements();
         Collections.shuffle(arr);
         return arr;
     }
@@ -28,14 +28,14 @@ public abstract class SortingAlgorithmTest {
         return arr;
     }
 
-    protected ArrayList<Integer> initializeSortedNonUnique() {
-        var arr = fillNonUniqueElements();
+    protected ArrayList<Integer> initializeSortedDuplicated() {
+        var arr = fillDuplicatedElements();
         Collections.sort(arr);
         return arr;
     }
 
     protected ArrayList<Integer> initializeSortedUnique() {
-        var arr = fillNonUniqueElements();
+        var arr = fillDuplicatedElements();
         Collections.sort(arr);
         return arr;
     }
@@ -48,7 +48,7 @@ public abstract class SortingAlgorithmTest {
         return arr;
     }
 
-    private ArrayList<Integer> fillNonUniqueElements() {
+    private ArrayList<Integer> fillDuplicatedElements() {
         ArrayList<Integer> arr = new ArrayList<>();
         Random r = new Random();
         for (int i = 0; i < 100; i++) {

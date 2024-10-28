@@ -6,7 +6,7 @@ class InsertionSortTest extends SortingAlgorithmTest {
     @Override
     @Test
     public void unsorted_nonUnique() {
-        var arr = initializeUnsortedNonUnique();
+        var arr = initializeUnsortedDuplicated();
 
         var algo = new InsertionSort(arr, false);
         algo.sort();
@@ -28,7 +28,7 @@ class InsertionSortTest extends SortingAlgorithmTest {
     @Override
     @Test
     public void sorted_nonUnique() {
-        var arr = initializeSortedNonUnique();
+        var arr = initializeSortedDuplicated();
 
         var algo = new InsertionSort(arr, false);
         algo.sort();
