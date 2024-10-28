@@ -7,14 +7,12 @@ import ui.UI;
 public class Main {
     public static void main(String[] args) {
         UI ui;
-        try{
+        try {
             Terminal terminal = TerminalBuilder.builder().system(true).build();
             LineReader reader = LineReaderBuilder.builder().terminal(terminal).build();
             ui = new UI(terminal, reader);
             ui.start();
-
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

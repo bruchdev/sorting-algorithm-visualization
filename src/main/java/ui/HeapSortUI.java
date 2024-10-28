@@ -2,7 +2,7 @@ package ui;
 
 import static ui.UI.array;
 
-public class HeapSort {
+public class HeapSortUI {
     public static void start() {
         Utils.prepareForSorting("Heap Sort");
         algorithms.HeapSort algo = new algorithms.HeapSort(array, true);

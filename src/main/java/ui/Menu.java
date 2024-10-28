@@ -23,19 +23,19 @@ class Menu {
     protected static void handleOptions() {
         switch (reader.readLine().trim().toLowerCase()) {
             case "1":
-                BubbleSort.start();
+                BubbleSortUI.start();
                 break;
             case "2":
-                InsertionSort.start();
+                InsertionSortUI.start();
                 break;
             case "3":
-                QuickSort.start();
+                QuickSortUI.start();
                 break;
             case "4":
-                SelectionSort.start();
+                SelectionSortUI.start();
                 break;
             case "5":
-                HeapSort.start();
+                HeapSortUI.start();
                 break;
             case "a":
             case "all":

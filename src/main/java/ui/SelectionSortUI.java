@@ -2,15 +2,15 @@ package ui;
 
 import static ui.UI.array;
 
-class InsertionSort {
+class SelectionSortUI {
     protected static void start() {
-        Utils.prepareForSorting("Insertion sort");
-        algorithms.InsertionSort algo = new algorithms.InsertionSort(array, true);
+        Utils.prepareForSorting("Selection Sort");
+        algorithms.SelectionSort algo = new algorithms.SelectionSort(array, true);
         algo.printArray();
         Utils.sleepALittle(2000);
         algo.sort();
         Utils.sleepALittle(2000);
-        algo.clearScreenAndPrintStatistics("Insertion Sort");
+        algo.clearScreenAndPrintStatistics("Selection Sort");
         Utils.sleepALittle(6000);
     }
 }

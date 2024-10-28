@@ -2,15 +2,15 @@ package ui;
 
 import static ui.UI.array;
 
-class BubbleSort {
+class QuickSortUI {
     protected static void start() {
-        Utils.prepareForSorting("Bubble Sort");
-        algorithms.BubbleSort algo =  new algorithms.BubbleSort(array, true);
+        Utils.prepareForSorting("Quick Sort");
+        algorithms.QuickSort algo = new algorithms.QuickSort(array, true);
         algo.printArray();
         Utils.sleepALittle(2000);
         algo.sort();
         Utils.sleepALittle(2000);
-        algo.clearScreenAndPrintStatistics("Bubble Sort");
+        algo.clearScreenAndPrintStatistics("Quick Sort");
         Utils.sleepALittle(6000);
     }
 }

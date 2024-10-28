@@ -6,8 +6,8 @@ import org.jline.terminal.Terminal;
 import java.util.ArrayList;
 
 public class UI {
-    protected static ArrayList<Integer> array;
     public static Terminal terminal;
+    protected static ArrayList<Integer> array;
     protected static LineReader reader;
 
     public UI(Terminal terminal, LineReader reader) {
