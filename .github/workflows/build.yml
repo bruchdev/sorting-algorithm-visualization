@@ -15,17 +15,14 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ macos-latest, windows-latest, ubuntu-latest ]
+        os: [ macos-latest, ubuntu-latest ]
         include:
           - os: ubuntu-latest
-            output: sorting-algorithm-visualization-linux
-            ext: ''
-          - os: macos-latest
-            output: sorting-algorithm-visualization-macos
-            ext: ''
-          - os: windows-latest
-            output: sorting-algorithm-visualization-windows
-            ext: .exe
+            platform: 'linux-amd64'
+          - os: 'macos-latest'
+          - platform: 'darwin-arm64'
+          - os: 'macos-13'
+            platform: 'darwin-amd64'
 
     steps:
       - name: Checkout
@@ -55,27 +52,7 @@ jobs:
         run: |
           mv target/algorithms-* target/${{ matrix.output }}${{ matrix.ext }}
 
-      - name: Rename artifact by OS (Windows)
-        if: runner.os == 'Windows'
-        shell: pwsh
-        run: |
-          $file = Get-ChildItem "target\algorithms-*" | Select-Object -First 1
-          $dest = Join-Path "target" "sorting-algorithm-visualization-windows.exe"
-          Rename-Item $file.FullName $dest
-
-      - name: Upload Windows artifact
-        if: runner.os == 'Windows'
-        uses: svenstaro/upload-release-action@v2
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: target/sorting-algorithm-visualization-windows.exe
-          asset_name: sorting-algorithm-visualization-windows.exe
-          tag: ${{ github.event.release.tag_name }}
-          overwrite: true
-          make_latest: true
-
       - name: Upload non windows images to release
-        if: runner.os != 'Windows'
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
