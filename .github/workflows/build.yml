@@ -60,9 +60,22 @@ jobs:
         shell: pwsh
         run: |
           $file = Get-ChildItem "target\algorithms-*" | Select-Object -First 1
-          Rename-Item $file.FullName "target\${{ matrix.output }}${{ matrix.ext }}"
+          $dest = Join-Path "target" "sorting-algorithm-visualization-windows.exe"
+          Rename-Item $file.FullName $dest
 
-      - name: Upload images to release
+      - name: Upload Windows artifact
+        if: runner.os == 'Windows'
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: target/sorting-algorithm-visualization-windows.exe
+          asset_name: sorting-algorithm-visualization-windows.exe
+          tag: ${{ github.event.release.tag_name }}
+          overwrite: true
+          make_latest: true
+
+      - name: Upload non windows images to release
+        if: runner.os != 'Windows'
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
