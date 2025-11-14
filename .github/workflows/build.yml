@@ -49,16 +49,16 @@ jobs:
         run: |
           mvn -B package --file pom.xml -DskipTests
 
-      - name: List files
-        shell: bash
+      - name: Find artifact
+        id: artifact
         run: |
-          ls -l target/algorithms-*
+          echo "file=$(ls target/algorithms-*)" >> $GITHUB_OUTPUT
 
       - name: Upload images to release
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: target/algorithms-*
+          file: ${{ steps.artifact.outputs.file }}
           tag: ${{ env.VERSION }}
           overwrite: true
           make_latest: true
