@@ -77,6 +77,7 @@ jobs:
         run: ls -R jar/
 
       - name: Build Native Image
+        shell: bash
         run: |
           JAR_FILE=$(ls jar/artifact/*.jar | head -n 1)
           echo "Building native image from: $JAR_FILE"
