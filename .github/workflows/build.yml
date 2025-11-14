@@ -67,6 +67,7 @@ jobs:
           java-version: '25'
           distribution: 'graalvm'
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          components: 'native-image'
 
       - name: Download JAR
         uses: actions/download-artifact@v4
