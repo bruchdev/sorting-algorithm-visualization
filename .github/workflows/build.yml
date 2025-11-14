@@ -75,7 +75,7 @@ jobs:
 
       - name: Build Native Image
         run: |
-          JAR_FILE=$(ls jar/*-all.jar | head -n 1)
+          JAR_FILE=$(ls jar/*.jar | head -n 1)
           echo "Building native image from: $JAR_FILE"
           
           native-image \
