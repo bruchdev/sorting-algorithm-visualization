@@ -49,16 +49,25 @@ jobs:
         run: |
           mvn -B package --file pom.xml -DskipTests
 
-      - name: Find artifact
-        id: artifact
+      - name: Rename artifact by OS (non windows)
+        if: runner.os != 'Windows'
+        shell: bash
         run: |
-          echo "file=$(ls target/algorithms-*)" >> $GITHUB_OUTPUT
+          mv target/algorithms-* target/${{ matrix.output }}${{ matrix.ext }}
+
+      - name: Rename artifact by OS (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $file = Get-ChildItem "target\algorithms-*" | Select-Object -First 1
+          Rename-Item $file.FullName "target\${{ matrix.output }}${{ matrix.ext }}"
 
       - name: Upload images to release
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: ${{ steps.artifact.outputs.file }}
+          file: target/${{ matrix.output }}${{ matrix.ext }}
+          asset_name: ${{ matrix.output }}${{ matrix.ext }}
           tag: ${{ env.VERSION }}
           overwrite: true
           make_latest: true
