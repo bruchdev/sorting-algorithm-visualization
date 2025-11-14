@@ -29,13 +29,13 @@ jobs:
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: 'Publish JAR'
-        uses: actions/upload-artifact@v2-preview
+        uses: actions/upload-artifact@v4
         with:
           name: 'sorting-algorithm-visualization-${{env.VERSION}}-all.jar'
           path: target/*-all.jar
 
   build-native:
-    name: HelloWorld on ${{ matrix.os }}
+    name: GraalVM on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
