@@ -39,6 +39,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Get Version
+        shell: bash
         run: |
           VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout 2>&1 | grep -v "WARNING" | tail -n1)
           echo "VERSION=$VERSION" >> $GITHUB_ENV
