@@ -9,9 +9,9 @@
     <version>v2.0</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>11</java.version>
-        <jline.version>3.27.1</jline.version>
-        <maven.compiler.version>3.13.0</maven.compiler.version>
+        <maven.compiler.release>25</maven.compiler.release>
+        <jline.version>3.30.6</jline.version>
+        <maven.compiler.version>3.14.1</maven.compiler.version>
         <maven.jar.version>3.4.2</maven.jar.version>
     </properties>
     <dependencies>
@@ -27,9 +27,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven.compiler.version}</version>
-                <configuration>
-                    <release>${java.version}</release>
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
