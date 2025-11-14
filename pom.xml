@@ -6,7 +6,7 @@
 
     <groupId>io.github.bruchdev</groupId>
     <artifactId>sorting-algorithm-visualization</artifactId>
-    <version>v2.0</version>
+    <version>v2.1</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
