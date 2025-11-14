@@ -1,0 +1,109 @@
+name: build.yml
+
+on:
+  release:
+    types: [ created ]
+  workflow_dispatch:
+
+jobs:
+  build-jar:
+    name: 'Build JAR'
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout'
+        uses: actions/checkout@v5
+
+      - name: 'Setup Java 25'
+        uses: actions/setup-java@v5
+        with:
+          java-version: 25
+          distribution: 'temurin'
+
+      - name: 'Build JARs'
+        run: |
+          mvn -B clean package -DskipTests
+
+      - name: 'Get Version Number'
+        run: |
+          VERSION=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: 'Publish JAR'
+        uses: actions/upload-artifact@v2-preview
+        with:
+          name: 'sorting-algorithm-visualization-${{env.VERSION}}-all.jar'
+          path: target/*-all.jar
+
+  build-native:
+    name: HelloWorld on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ macos-latest, windows-latest, ubuntu-latest ]
+        include:
+          - os: ubuntu-latest
+            target: linux-x86_64
+            output: sorting-algorithm-visualization-linux
+          - os: macos-latest
+            target: darwin-x86_64
+            output: sorting-algorithm-visualization-macos
+          - os: windows-latest
+            target: windows-x86_64
+            output: sorting-algorithm-visualization.exe
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup GraalVM 25
+        uses: graalvm/setup-graalvm@v1
+        with:
+          java-version: '25'
+          distribution: 'graalvm'
+          components: 'native-image'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build Native Image
+        run: |
+          JAR_FILE=$(ls *-all.jar)
+          echo "Building native image from $JAR_FILE"
+          
+          native-image \
+            -jar "$JAR_FILE" \
+            -o ${{ matrix.output }} \
+            --no-fallback \
+            -march=compatibility \
+            -H:+ReportExceptionStackTraces
+
+      - name: Build and run jar file
+        run: |
+          native-image -jar target/*-all.jar
+
+      - name: Upload Native Binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.output }}
+          path: ${{ matrix.output }}*
+
+  publish-release:
+    name: Publish to Release
+    needs: [ build-jar, build-native ]
+    runs-on: ubuntu-latest
+    if: github.event_name == 'release'
+    permissions:
+      contents: write
+
+    steps:
+      - name: Download All Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: List Artifacts
+        run: ls -R artifacts
+
+      - name: Upload to Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            artifacts/*/*
