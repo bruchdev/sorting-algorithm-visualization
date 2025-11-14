@@ -73,6 +73,9 @@ jobs:
         with:
           path: jar/
 
+      - name: Display structure of downloaded files
+        run: ls -R jar/
+
       - name: Build Native Image
         run: |
           JAR_FILE=$(ls jar/*.jar | head -n 1)
