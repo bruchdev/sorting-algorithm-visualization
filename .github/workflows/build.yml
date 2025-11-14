@@ -31,7 +31,6 @@ jobs:
       - name: 'Publish JAR'
         uses: actions/upload-artifact@v4
         with:
-          name: 'sorting-algorithm-visualization-${{env.VERSION}}-all.jar'
           path: target/*-all.jar
 
   build-native:
@@ -60,8 +59,12 @@ jobs:
         with:
           java-version: '25'
           distribution: 'graalvm'
-          components: 'native-image'
           github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Download JAR
+        uses: actions/download-artifact@v5
+        with:
+          name: artefact
 
       - name: Build Native Image
         run: |
