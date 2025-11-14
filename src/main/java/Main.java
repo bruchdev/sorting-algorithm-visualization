@@ -4,19 +4,19 @@ import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
 import ui.UI;
 
-public class Main {
-    public static void main(String[] args) {
-        UI ui;
-        try{
-            Terminal terminal = TerminalBuilder.builder().system(true).build();
-            LineReader reader = LineReaderBuilder.builder().terminal(terminal).build();
-            ui = new UI(terminal, reader);
-            ui.start();
+void main() {
+    final UI ui;
+    final Terminal terminal;
+    final LineReader reader;
 
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
+    try {
+        terminal = TerminalBuilder.builder().system(true).build();
+        reader = LineReaderBuilder.builder().terminal(terminal).build();
+        ui = new UI(terminal, reader);
+        ui.start();
 
+    } catch (Exception e) {
+        e.printStackTrace();
     }
+
 }
