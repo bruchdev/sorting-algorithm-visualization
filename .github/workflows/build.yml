@@ -49,6 +49,11 @@ jobs:
         run: |
           mvn -B package --file pom.xml -DskipTests
 
+      - name: List files
+        shell: bash
+        run: |
+          ls -l target/algorithms-*
+
       - name: Upload images to release
         uses: svenstaro/upload-release-action@v2
         with:
