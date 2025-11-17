@@ -22,34 +22,19 @@ class Menu {
 
     protected static void handleOptions() {
         switch (reader.readLine().trim().toLowerCase()) {
-            case "1":
-                BubbleSort.start();
-                break;
-            case "2":
-                InsertionSort.start();
-                break;
-            case "3":
-                QuickSort.start();
-                break;
-            case "4":
-                SelectionSort.start();
-                break;
-            case "5":
-                HeapSort.start();
-                break;
-            case "a":
-            case "all":
-                StartAllOption.start();
-                break;
-            case "":
-                break;
-            case "exit":
-            case "e":
-                System.exit(0);
-            default:
+            case "1" -> BubbleSort.start();
+            case "2" -> InsertionSort.start();
+            case "3" -> QuickSort.start();
+            case "4" -> SelectionSort.start();
+            case "5" -> HeapSort.start();
+            case "a", "all" -> StartAllOption.start();
+            case "" -> {
+            }
+            case "exit", "e" -> System.exit(0);
+            default -> {
                 System.err.println("Wrong input");
                 Utils.sleepALittle(2000);
-                break;
+            }
         }
     }
 }

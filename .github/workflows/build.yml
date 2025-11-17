@@ -2,30 +2,33 @@ name: Build & Release
 
 on:
   release:
-    types: [ created ]
+    types: [ published ]
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   actions: write
 
 jobs:
   build-native:
     name: GraalVM on ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ macos-latest, windows-latest, ubuntu-latest ]
+        os: [ macos-latest, ubuntu-latest, windows-latest ]
         include:
-          - os: ubuntu-latest
-            output: sorting-algorithm-visualization-linux
+          - os: 'ubuntu-latest'
+            platform: 'linux-amd64'
             ext: ''
-          - os: macos-latest
-            output: sorting-algorithm-visualization-macos
+          - os: 'macos-latest'
+            platform: 'darwin-arm64'
             ext: ''
-          - os: windows-latest
-            output: sorting-algorithm-visualization-windows
-            ext: .exe
+          - os: 'macos-13'
+            platform: 'darwin-amd64'
+            ext: ''
+          - os: 'windows-latest'
+            platform: 'win-amd64'
+            ext: '.exe'
+    runs-on: ${{ matrix.os }}
 
     steps:
       - name: Checkout
@@ -49,11 +52,12 @@ jobs:
         run: |
           mvn -B package --file pom.xml -DskipTests
 
-      - name: Upload images to release
+      - name: Upload non windows images to release
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: "target/algorithms-*"
+          file: target/algorithms-${{ env.VERSION }}${{ matrix.ext }}
+          asset_name: algorithms-${{ env.VERSION }}-${{ matrix.platform }}${{ matrix.ext }}
           tag: ${{ env.VERSION }}
           overwrite: true
           make_latest: true
