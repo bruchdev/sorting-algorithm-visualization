@@ -20,9 +20,7 @@ jobs:
           - os: ubuntu-latest
             platform: 'linux-amd64'
           - os: 'macos-latest'
-          - platform: 'darwin-arm64'
-          - os: 'macos-13'
-            platform: 'darwin-amd64'
+            platform: 'darwin-arm64'
 
     steps:
       - name: Checkout
