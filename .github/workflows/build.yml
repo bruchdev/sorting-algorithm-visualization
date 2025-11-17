@@ -52,17 +52,11 @@ jobs:
         run: |
           mvn -B package --file pom.xml -DskipTests
 
-      #      - name: Rename artifact by OS (non windows)
-      #        if: runner.os != 'Windows'
-      #        shell: bash
-      #        run: |
-      #          mv target/algorithms-${{ env.VERSION }}* target/${{ matrix.output }}${{ matrix.ext }}
-
       - name: Upload non windows images to release
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: target/algorithms-${{ env.VERSION }}
+          file: target/algorithms-${{ env.VERSION }}${{ matrix.ext }}
           asset_name: algorithms-${{ env.VERSION }}-${{ matrix.platform }}${{ matrix.ext }}
           tag: ${{ env.VERSION }}
           overwrite: true
